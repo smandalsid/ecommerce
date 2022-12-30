@@ -1,0 +1,22 @@
+{% extends 'admin_base.html' %}
+{% block main %}
+
+<table>
+    <tr>
+        <th>Sl.No</th>
+        <th>Name</th>
+        <th>Created</th>
+        <th>Actions</th>
+    </tr>
+    
+    {% for i in category %}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{i.name}}</td>
+        <td>{{i.created}}</td>
+        <td><a href="{% url 'edit_category' i.pk %}">Edit</a>/<a href="/delete_category/{{i.id}}/" onclick="return confirm('Are You Sure?')">Delete</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
