@@ -1,0 +1,27 @@
+{% extends 'admin_base.html' %}
+{% block main %}
+
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="category">Product Category</label>
+    <select name="category" id="category">
+        <option value="">Choose...</option>
+        {% for i in categories %}
+        <option value="{{i.id}}" {% if i.id == product.category.id %}selected{% endif %}>{{i.name}}</option>
+        {% endfor %}
+    </select><br><br>
+    <label for="name">Product Name</label>
+    <input type="text" name="name" id="name" value="{{product.name}}"><br><br>
+    <label for="price">Price</label>
+    <input type="text" name="price" id="price" value="{{product.price}}"><br><br>
+    <label for="discount">Discount</label>
+    <input type="text" name="discount" id="discount" value="{{product.discount}}"><br><br>
+    <label for="image">Product Image</label>
+    <input type="file" name="image" id="image">
+    <img src="{{product.image.url}}" alt="" srcset="" style="width: 200px; height: 200px;"><br><br>
+    <label for="description">Product Description</label>
+    <textarea name="description" id="description" cols="30" rows="10">{{product.description}}</textarea>
+    <input type="submit">
+</form>
+
+{% endblock %}

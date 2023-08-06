@@ -1,0 +1,76 @@
+{% include 'navbar.html' %}
+{% load static %}
+
+<nav class="navbar navbar-expand-lg bg-dark">
+    <div class="container-fluid">
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {% if not request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signup' %}">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'user_login' %}">Sign In</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admin_login' %}">Admin Log In</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a href="/user_product/0" class="nav-link">View Product</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Sign Out</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'edit_profile' %}">Edit Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'change_password' %}">Change Password</a>
+                </li>
+                {% endif %}
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<a href="{% url 'user_product' 0 %}">
+    All Product</a>
+{% for i in allcategory %}
+<a href="{% url 'user_product' i.id %}">
+    {{i.name}}</a>
+{% endfor %}
+
+<h4 style="color:red;">
+    View {{category.name}} Product</h4>
+
+{% for j in product %} <div class="col-md-3">
+    <div class="card" align="center" style="border:1px solid lightgrey">
+        <center>
+            <img class="card-img-top img-thumbnail" src="{{j.image.url}}" style="width:300px; height: 300px;"
+                alt="card-img">
+        </center>
+        <div class="card-body">
+            <h6 class="card-title">
+                {{j.name}} Rs.{{j.price}}</h6>
+            <p class="card-text" style="font-size:14px">
+                {{j.description}}</p>
+            <button type="submit" class="btn btn-primary">
+                Add to Cart</button>
+        </div>
+    </div>
+</div>
+{% empty %}
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+            No Products
+        </div>
+    </div>
+</div>
+{% endfor %}

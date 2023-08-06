@@ -1,0 +1,39 @@
+{% extends 'admin_base.html' %}
+{% block main  %}
+
+<h1>
+    All Products
+</h1>
+
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">S.No</th>
+        <th scope="col">Image</th>
+        <th scope="col">Product Name</th>
+        <th scope="col">Category</th>
+        <th scope="col">Description</th>
+        <th scope="col">Price</th>
+        <th scope="col">Discount</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for i in products %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td><img src="{{i.image.url}}" alt="" srcset="" style="width:100px; height: 100px;"></td>
+            <td>{{i.name}}</td>
+            <td>{{i.category.name}}</td>
+            <td>{{i.description}}</td>
+            <td>{{i.price}}</td>
+            <td>{{i.discount}}</td>
+            <td><a href="/edit_product/{{i.id}}/">Edit</a>/<a href="/delete_product/{{i.id}}/" onclick="return confirm('Are You Sure?')">Delete</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+{% endblock %}
