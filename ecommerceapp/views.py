@@ -152,6 +152,7 @@ def signup(request):
         user=User.objects.create_user(username=email, first_name=fname, last_name=lname, email=email, password=password)
         UserProfile.objects.create(user=user, mobile=mobile, address=address, image=image)
         messages.success(request, "Registration successful")
+        return redirect('user_login')
 
     return render(request, "registrations.html", locals())
 
