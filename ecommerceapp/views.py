@@ -240,5 +240,6 @@ def product_detail(request, pid):
 
     product=Product.objects.get(id=pid)
     actprice=int(product.price)-(int(product.discount)*int(product.price)/100)
+    latest_product = Product.objects.filter().exclude(id=pid).order_by('-id')[:10]
 
     return render(request, "product_detail.html", locals())
