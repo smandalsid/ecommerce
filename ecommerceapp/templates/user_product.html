@@ -3,12 +3,11 @@
 
 <nav class="navbar navbar-expand-lg bg-warning">
     <div class="container-fluid">
-
+        
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link text-warning" href="{% url 'user_product' 0 %}" style="color: red;">All
-                        Products</a>
+                    <a class="nav-link text-warning" href="{% url 'user_product' 0 %}" style="color: red;">All Products</a>
                 </li>
                 {% for i in allcategory %}
                 <li class="nav-item">
@@ -20,38 +19,47 @@
     </div>
 </nav>
 
-<h4 style="color:red;">
-    View {{category.name}} Product</h4>
-    <div class="container text-center">
-        <div class="row">
-          <div class="col">
-            1 of 2
-          </div>
-          <div class="col">
-            2 of 2
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            1 of 3
-          </div>
-          <div class="col">
-            2 of 3
-          </div>
-          <div class="col">
-            3 of 3
-          </div>
-        </div>
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script> -->
+
+    <div class="alert alert-info text-center" role="alert">
+        {% if category %}
+
+        {{category.name}}
+
+        {% else %}
+
+        All products
+
+        {% endif %}
       </div>
-{% for j in product %}
 
-
-{% empty %}
-<div class="col-md-12">
-    <div class="card">
-        <div class="card-body">
-            No Products
+    <div class="grid text-center">
+        {% for j in product %}
+        <div class="g-col-6 g-col-md-4">
+            <div class="card d-flex align-items-center">
+                <img src="{{j.image.url}}" class="card-img-top p-2" alt="..." style="width: 15rem; height: 15rem;">
+                <div class="card-body">
+                    <a href="#" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover card-title">
+                        {{j.name}} Rs.{{j.price}}</a>
+                    <p class="card-text" style="font-size:14px">
+                        {{j.description}}</p>
+                    <button type="submit" class="btn btn-primary">
+                        Add to Cart</button>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-{% endfor %}
+
+        {% empty %}
+
+        <div class="g-col-6 g-col-md-4">
+            <div class="card d-flex align-items-center">
+                No Products in this category
+            </div>
+        </div>
+
+        {% endfor %}
+      </div>
+
+
