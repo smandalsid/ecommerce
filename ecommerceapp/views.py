@@ -239,5 +239,6 @@ def admin_logout(request):
 def product_detail(request, pid):
 
     product=Product.objects.get(id=pid)
+    actprice=int(product.price)-(int(product.discount)*int(product.price)/100)
 
     return render(request, "product_detail.html", locals())

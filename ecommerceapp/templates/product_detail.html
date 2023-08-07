@@ -2,12 +2,55 @@
 
 {% block body %}
 
-<div class="grid text-center">
-    <div class="g-col-6 g-col-md-4">.g-col-6 .g-col-md-4</div>
-    <div class="g-col-6 g-col-md-4">.g-col-6 .g-col-md-4</div>
-    <div class="g-col-6 g-col-md-4">.g-col-6 .g-col-md-4</div>
-</div>
+<script>
+    function decrease()
+    {
+        var x=parseInt(document.getElementById('quantity').value);
+        if(x>0)
+        {
+            document.getElementById('quantity').value=x-1;
+        }
+    }
 
-{{product.name}}
+    function increase()
+    {
+        var x=parseInt(document.getElementById('quantity').value);
+        if(x<100)
+        {
+            document.getElementById('quantity').value=x+1;
+        }
+    }
+
+</script>
+
+<div class="cart_page">
+    <div class="left">
+        <div class="card" style="width: 30rem;">
+            <img src="{{product.image.url}}" class="card-img-top" alt="..." style="width: auto; height: auto;">
+            <div class="card-body bg-warning bg-gradient">
+                <h5 class="card-title">{{product.name}}</h5>
+                <p class="card-text">{{product.description}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="right">
+        <div class="mycard">
+            <div class="price">
+                <p>MRP: <span class="btn btn-warning">₹{{product.price}}</span></p>
+                <p>Discount: <span class="btn btn-success">{{product.discount}}%</span></p>
+                <p>Price: <span class="btn btn-success">₹{{actprice}}<span class="btn btn-success"></span></p>
+            </div>
+            <div class="quant_p_m">
+                
+                <i class="fa-solid fa-minus" style="margin: 10px;" onclick="decrease()"></i>
+                <input type="text" class="form-control text-center" id="quantity" value="1" style="width: 50px;" disabled>
+                <i class="fa-solid fa-plus" style="margin: 10px;" onclick="increase()"></i>
+            </div>
+            <div class="cartbtn">
+                <a href="#"><button type="button" class="btn btn-outline-success">Add to cart</button></a>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

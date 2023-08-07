@@ -39,14 +39,13 @@
         {% for j in product %}
         <div class="g-col-6 g-col-md-4">
             <div class="card d-flex align-items-center">
-                <img src="{{j.image.url}}" class="card-img-top p-2" alt="..." style="width: 15rem; height: 15rem;">
+                <img src="{{j.image.url}}" class="card-img-top p-2" alt="..." style="width: 30%; height: 30%;">
                 <div class="card-body">
                     <a href="{% url 'product_detail' j.id %}" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover card-title">
                         {{j.name}} Rs.{{j.price}}</a>
                     <p class="card-text" style="font-size:14px">
                         {{j.description}}</p>
-                    <button type="submit" class="btn btn-primary">
-                        Add to Cart</button>
+                    <a href="{% url 'product_detail' j.id %}"><button type="submit" class="btn btn-primary">Add To Cart</button></a>
                 </div>
             </div>
         </div>

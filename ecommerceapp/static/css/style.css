@@ -7,3 +7,57 @@
 .navbar-brand:hover{
     color: yellow;
 }
+
+.cart_page{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+}
+
+.left{
+    width: 50%;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0px 10px 0px;
+    background-color: #05386B;
+}
+
+.right{
+    width: 50%;
+    height: 100ex;
+    background-color: #EDF5E1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.mycard{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    flex-direction: column;
+}
+
+.quant_p_m{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+.price{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    flex-direction: column;
+}
+
+.cartbtn{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}

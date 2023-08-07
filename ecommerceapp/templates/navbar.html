@@ -10,7 +10,8 @@
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.png' %}">
-    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet"
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/4f88661bae.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -50,7 +51,7 @@
                     </li>
                     {% else %}
                     <li class="nav-item">
-                        <a href="/user_product/0" class="nav-link">View Product</a>
+                        <a href="/user_product/0" class="nav-link">Products</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'logout' %}">Sign Out</a>
