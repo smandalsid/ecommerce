@@ -228,10 +228,16 @@ def user_product(request, pid):
     else:
         return redirect('user_login')
 
-    return render(request, 'user_product.html', locals())
+    return render(request, 'user_product_view.html', locals())
 
 def admin_logout(request):
     if request.user.is_authenticated:
         logout(request)
         messages.success(request, "Logged Out")
     return redirect('main')
+
+def product_detail(request, pid):
+
+    product=Product.objects.get(id=pid)
+
+    return render(request, "product_detail.html", locals())

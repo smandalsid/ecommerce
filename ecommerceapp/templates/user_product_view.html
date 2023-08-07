@@ -41,7 +41,7 @@
             <div class="card d-flex align-items-center">
                 <img src="{{j.image.url}}" class="card-img-top p-2" alt="..." style="width: 15rem; height: 15rem;">
                 <div class="card-body">
-                    <a href="#" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover card-title">
+                    <a href="{% url 'product_detail' j.id %}" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover card-title">
                         {{j.name}} Rs.{{j.price}}</a>
                     <p class="card-text" style="font-size:14px">
                         {{j.description}}</p>
