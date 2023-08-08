@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from ecommerceapp.models import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+import json
 # Create your views here.
 
 def home(request):
@@ -243,3 +244,23 @@ def product_detail(request, pid):
     latest_product = Product.objects.filter().exclude(id=pid).order_by('-id')[:10]
 
     return render(request, "product_detail.html", locals())
+
+def add_to_cart(request, pid):
+    myli={"objects":[]}
+    try:
+        cart=Cart.objects.get(user=request.user)
+        myli=json.loads((str(cart.product)).replace("'", '"'))
+        try:
+            myli['objects'][0][str(pid)]=myli['objects'][0].get(str(pid), 0)+1
+        except:
+            myli['objects'].append({str(pid):1})
+        cart.product=myli
+        cart.save()
+    except:
+        myli['objects'].append({str(pid):1})
+        cart=Cart.objects.create(user=request.user, product=myli)
+
+
+def cart(request):
+    
+    return render(request, 'cart.html', locals())
