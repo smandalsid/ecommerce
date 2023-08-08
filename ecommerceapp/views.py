@@ -268,9 +268,6 @@ def decre(request, pid):
     if not request.user.is_authenticated:
         return redirect('user_login')
     cart=Cart.objects.get(user=request.user)
-    # if request.GET.get('action')=="incre":
-    #     myli=json.loads((str(cart.product)).replace("'", '"'))
-    #     myli['objects'][0][str(pid)]=myli['objects'][0].get(str(pid), 0)+1
     myli=json.loads((str(cart.product)).replace("'", '"'))
     if myli['objects'][0][str(pid)]==1:
         del myli['objects'][0][str(pid)]
@@ -314,3 +311,33 @@ def deletecart(request, pid):
     cart.save()
     messages.success(request, "Deleted Successfully")
     return redirect('cart')
+
+def booking(request):
+
+    if not request.user.is_authenticated:
+        return redirect('user_login')
+    
+    user=UserProfile.objects.get(user=request.user)
+    cart=Cart.objects.get(user=request.user)
+    total=0
+
+    productid=(cart.product).replace("'", '"')
+    productid=json.loads(str(productid))
+
+    try:
+        productid=productid['objects'][0]
+    except:
+        messages.success(request, "Cart is empty!!")
+        return redirect('cart')
+    for i, j in productid.items():
+        product=Product.objects.get(id=1)
+        total+=int(j)*int(product.price)
+    
+    if request.method=="POST":
+        book=Booking.objects.create(user=request.user, product=cart.product, total=total)
+        cart.product={"objects":[]}
+        cart.save()
+        messages.success(request, "Order placed successfully")
+        return redirect('main')
+
+    return render(request, "booking.html", locals())
