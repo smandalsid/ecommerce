@@ -41,13 +41,13 @@
                 <p>Price: <span class="btn btn-success">₹{{actprice}}<span class="btn btn-success"></span></p>
             </div>
             <div class="quant_p_m">
-                
-                <i class="fa-solid fa-minus" style="margin: 10px;" onclick="decrease()"></i>
-                <input type="text" class="form-control text-center" id="quantity" value="1" style="width: 50px;" disabled>
-                <i class="fa-solid fa-plus" style="margin: 10px;" onclick="increase()"></i>
+<!--                 
+                <i class="fa-solid fa-minus" style="margin: 10px;" onclick="decrease()"></i> -->
+                <!-- <input type="text" class="form-control text-center" id="quantity" value="1" style="width: 50px;" readonly> -->
+                <!-- <i class="fa-solid fa-plus" style="margin: 10px;" onclick="increase()"></i> -->
             </div>
             <div class="cartbtn">
-                <a href="#"><button type="button" class="btn btn-outline-success">Add to cart</button></a>
+                <a href="{% url 'add_to_cart' product.id %}"><button type="button" class="btn btn-outline-success">Add to cart</button></a>
             </div>
         </div>
     </div>
@@ -63,7 +63,7 @@
                     {{j.name}} Rs.{{j.price}}</a>
                 <p class="card-text" style="font-size:14px">
                     {{j.description}}</p>
-                <a href="{% url 'product_detail' j.id %}"><button type="submit" class="btn btn-primary">Add To Cart</button></a>
+                <a href="{% url 'add_to_cart' j.id %}"><button type="submit" class="btn btn-primary">Add To Cart</button></a>
             </div>
         </div>
     </div>

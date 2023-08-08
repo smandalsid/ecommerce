@@ -44,6 +44,10 @@ urlpatterns = [
     path('user_product/<int:pid>', user_product, name="user_product"),
     path('admin_logout/', admin_logout, name="admin_logout"),
     path('product_detail/<int:pid>', product_detail, name="product_detail"),
+    path('add_to_cart/<int:pid>/', add_to_cart, name="add_to_cart"),
     path('cart/', cart, name="cart"),
+    path('incre/<int:pid>', incre, name="incre"),
+    path('decre/<int:pid>', decre, name="decre"),
+    path('deletecart/<int:pid>', deletecart, name="deletecart"),
     
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

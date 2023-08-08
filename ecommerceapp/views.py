@@ -238,7 +238,8 @@ def admin_logout(request):
     return redirect('main')
 
 def product_detail(request, pid):
-
+    if not request.user.is_authenticated:
+        return redirect('user_login')
     product=Product.objects.get(id=pid)
     actprice=int(product.price)-(int(product.discount)*int(product.price)/100)
     latest_product = Product.objects.filter().exclude(id=pid).order_by('-id')[:10]
@@ -246,6 +247,8 @@ def product_detail(request, pid):
     return render(request, "product_detail.html", locals())
 
 def add_to_cart(request, pid):
+    if not request.user.is_authenticated:
+        return redirect('user_login')
     myli={"objects":[]}
     try:
         cart=Cart.objects.get(user=request.user)
@@ -259,8 +262,55 @@ def add_to_cart(request, pid):
     except:
         myli['objects'].append({str(pid):1})
         cart=Cart.objects.create(user=request.user, product=myli)
+    return redirect('cart')
 
+def decre(request, pid):
+    if not request.user.is_authenticated:
+        return redirect('user_login')
+    cart=Cart.objects.get(user=request.user)
+    # if request.GET.get('action')=="incre":
+    #     myli=json.loads((str(cart.product)).replace("'", '"'))
+    #     myli['objects'][0][str(pid)]=myli['objects'][0].get(str(pid), 0)+1
+    myli=json.loads((str(cart.product)).replace("'", '"'))
+    if myli['objects'][0][str(pid)]==1:
+        del myli['objects'][0][str(pid)]
+    else:
+        myli['objects'][0][str(pid)]=myli['objects'][0].get(str(pid), 0)-1
+    cart.product=myli
+    cart.save()
+    return redirect('cart')
+
+def incre(request, pid):
+    if not request.user.is_authenticated:
+        return redirect('user_login')
+    cart=Cart.objects.get(user=request.user)
+    myli=json.loads((str(cart.product)).replace("'", '"'))
+    myli['objects'][0][str(pid)]=myli['objects'][0].get(str(pid), 0)+1
+    cart.product=myli
+    cart.save()
+    return redirect('cart')
 
 def cart(request):
+    if not request.user.is_authenticated:
+        return redirect('user_login')
     
+    try:
+        cart=Cart.objects.get(user=request.user)
+        product=(cart.product).replace("'", '"')
+        myli = json.loads(str(product))
+        product = myli['objects'][0]
+    except:
+        product=[]
+    lenpro=len(product)
     return render(request, 'cart.html', locals())
+
+def deletecart(request, pid):
+    cart=Cart.objects.get(user=request.user)
+    product=(cart.product).replace("'", '"')
+    myli=json.loads(str(product))
+
+    del myli['objects'][0][str(pid)]
+    cart.product=myli
+    cart.save()
+    messages.success(request, "Deleted Successfully")
+    return redirect('cart')
