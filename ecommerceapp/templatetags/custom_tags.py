@@ -5,8 +5,6 @@ register = template.Library()
 @register.filter()
 def applydiscount(pid):
     data = Product.objects.get(id=pid)
-    # price = int(data.price) * (100 - int(data.discount))/100
-    print(data.price, data.discount)
     price = int(data.price)-(int(data.price)*int(data.discount)/100)
     return price
 
