@@ -1,0 +1,44 @@
+{% include 'navbar.html' %}
+
+{% block body %}
+
+<div class="card m-5">
+    <div class="card-body text-center">
+        <h5 class="card-title">Order tracking</h5>
+
+        {% if status == 1 %}
+        <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="16" aria-valuemin="0"
+            aria-valuemax="100" style="height: 20px;">
+            <div class="progress-bar" style="width: 16%; height: 20px;">{{order.get_status_display}}</div>
+        </div>
+        {% elif status == 2 %}
+        <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="33" aria-valuemin="0"
+            aria-valuemax="100" style="height: 20px;">
+            <div class="progress-bar" style="width: 33%;">{{order.get_status_display}}</div>
+        </div>
+        {% elif status == 3 %}
+        <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="50" aria-valuemin="0"
+            aria-valuemax="100" style="height: 20px;">
+            <div class="progress-bar" style="width: 50%;">{{order.get_status_display}}</div>
+        </div>
+        {% elif status == 4 %}
+        <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="67" aria-valuemin="0"
+            aria-valuemax="100" style="height: 20px;">
+            <div class="progress-bar" style="width: 67%;">{{order.get_status_display}}</div>
+        </div>
+        {% elif status == 5 %}
+        <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="3" aria-valuemin="0"
+            aria-valuemax="100" style="height: 20px;">
+            <div class="progress-bar" style="width: 83%;">{{order.get_status_display}}</div>
+        </div>
+        {% elif status == 6 %}
+        <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="100" aria-valuemin="0"
+            aria-valuemax="100" style="height: 20px;">
+            <div class="progress-bar" style="width: 100%;">{{order.get_status_display}}</div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}

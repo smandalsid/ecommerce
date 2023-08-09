@@ -1,22 +1,84 @@
 {% load static %}
 {% include 'navbar.html' %}
 
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <label for="fname">First Name</label><br>
-        <input type="text" name="fname" id="fname" pattern="[A-Za-z]+" placeholder="Enter First Name" required value="{{user.user.first_name}}"><br><br>
-        <label for="lname">Last Name</label><br>
-        <input type="text" name="lname" id="lname" pattern="[A-Za-z]+" placeholder="Enter Last Name" required value="{{user.user.last_name}}"><br><br>
-        <label for="email">Email</label><br>
-        <input type="email" name="email" id="email" placeholder="Enter email address" required value="{{user.user.email}}" readonly><br><br>
-        <label for="mobile">Mobile</label><br>
-        <input type="text" name="mobile" id="mobile" placeholder="Enter your mobile number" required value="{{user.mobile}}"><br><br>
-        
-        <label for="image">Profile Picture</label><br>
-        <input type="file" name="image" id="image" value="{{user.image.url}}" src="{{user.image.url}}">
-        <img src="{{user.image.url}}" alt="Profile Picture" style="height: 100px; width: 100px;">
-        <br><br> 
-        <label for="address">Address</label><br>
-        <textarea name="address" id="address" cols="30" rows="10" placeholder="Enter address" required>{{user.address}}</textarea><br><br>
-        <input type="submit" value="submit">
-</form>
+<div class="card m-5 border border-success">
+
+    <div class="card-body">
+        <h2 class="card-title text-center">Edit Profile</h5>
+            <h5 class="card-subtitle mb-2 text-body-secondary text-center pb-2">Edit your details below</h6>
+                <form class="was-validated row g-1" name="signup" method="post" onsubmit="return(check())" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="form-floating col-md-6 mb-3">
+                        <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name" required
+                            pattern="[A-Za-z]+" value="{{user.user.first_name}}">
+                        <label for="fname" class="form-label">First Name</label>
+                        <span class="form-text">
+                            Only alphabets
+                        </span>
+                        <div class="invalid-feedback">
+                            Please enter first name
+                        </div>
+                    </div>
+                    <div class="form-floating col-md-6 mb-3">
+                        <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name" required value="{{user.user.last_name}}"
+                            pattern="[A-Za-z]+">
+                        <label for="lname" class="form-label">Last Name</label>
+                        <span class="form-text">
+                            Only alphabets
+                        </span>
+                        <div class="invalid-feedback">
+                            Please enter last name
+                        </div>
+                    </div>
+
+                    <div class="form-floating col-md-12 mb-3">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{user.user.email}}" required>
+                        <label for="email" class="form-label">Email</label>
+                        <span class="form-text">
+                            someone@mail.com
+                        </span>
+                        <div class="invalid-feedback">
+                            Please enter email ID
+                        </div>
+                    </div>
+
+                    <div class="form-floating col-md-12 mb-3">
+                        <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile Number" value="{{user.mobile}}" required>
+                        <label for="mobile" class="form-label">Mobile</label>
+                        <span class="form-text">
+                            9876XXXX56
+                        </span>
+                        <div class="invalid-feedback">
+                            Please enter mobile number
+                        </div>
+                    </div>
+
+                    <div class="form-floating col-md-6 mb-3">
+                        <input type="file" class="form-control" id="image" name="image">
+                        <label for="image" class="form-label">Profile Picture</label>
+                        <div class="invalid-feedback">
+                            Please choose profile picture
+                        </div>
+                    </div>
+
+                    <div class="form-floating col-md-6 mb-3 d-flex justify-content-center">
+                        <img src="{{user.image.url}}" alt="Profile Picture" style="height: 100px; width: 100px; border-radius: 5px; border: 2px solid olive;">
+                    </div>
+
+                    <div class="form-floating col-md-12 mb-3">
+                        <textarea name="address" id="address" cols="30" rows="10" class="form-control" required placeholder="Address">{{user.address}}</textarea>
+                        <label for="address" class="form-label">Address</label>
+                        <div class="invalid-feedback">
+                            Please enter address
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <button class="btn btn-primary" type="submit" value="submit">Edit details</button>
+                    </div>
+                </form>
+
+    </div>
+
+</div>

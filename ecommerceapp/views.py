@@ -343,5 +343,16 @@ def booking(request):
     return render(request, "booking.html", locals())
 
 def my_order(request):
+    if not request.user.is_authenticated:
+        return redirect('user_login')
     orders=Booking.objects.filter(user=request.user)
     return render(request, 'my_order.html', locals())
+
+def user_order_track(request, pid):
+    if not request.user.is_authenticated:
+        return redirect('user_login')
+    
+    order=Booking.objects.get(id=pid)
+    status=int(order.status)
+    return render(request, "user_order_track.html", locals())
+

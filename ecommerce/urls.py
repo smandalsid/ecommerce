@@ -51,5 +51,6 @@ urlpatterns = [
     path('deletecart/<int:pid>', deletecart, name="deletecart"),
     path('booking/', booking, name="booking"),
     path('my_order/', my_order, name="my_order"),
+    path('user_order_track/<int:pid>', user_order_track, name="user_order_track"),
     
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
