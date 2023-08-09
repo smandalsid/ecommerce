@@ -341,3 +341,7 @@ def booking(request):
         return redirect('main')
 
     return render(request, "booking.html", locals())
+
+def my_order(request):
+    orders=Booking.objects.filter(user=request.user)
+    return render(request, 'my_order.html', locals())
