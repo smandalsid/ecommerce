@@ -330,8 +330,8 @@ def booking(request):
         messages.success(request, "Cart is empty!!")
         return redirect('cart')
     for i, j in productid.items():
-        product=Product.objects.get(id=1)
-        total+=int(j)*int(product.price)
+        product=Product.objects.get(id=i)
+        total+=int(int(j)*(int(product.price)-(int(product.price)*int(product.discount)/100)))
     
     if request.method=="POST":
         book=Booking.objects.create(user=request.user, product=cart.product, total=total)

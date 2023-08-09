@@ -2,6 +2,82 @@
 
 {% block body %}
 
-BOOKING
+<div class="card m-5 border border-success">
+
+    <div class="card-body">
+        <h2 class="card-title text-center">Confirm your order details</h5>
+            <h5 class="card-subtitle mb-2 text-body-secondary text-center pb-2">Please enter your details below</h6>
+                <form class="was-validated row g-1" name="signup" method="post" onsubmit="return(check())" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+
+                    <div class="form-floating col-md-6 mb-3">
+                        <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name" value="{{user.user.first_name}}" required
+                            pattern="[A-Za-z]+">
+                        <label for="fname" class="form-label">First Name</label>
+                        <span class="form-text">
+                            Only alphabets
+                        </span>
+                        <div class="invalid-feedback">
+                            Please enter first name
+                        </div>
+                    </div>
+                    <div class="form-floating col-md-6 mb-3">
+                        <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name" value="{{user.user.last_name}}" required
+                            pattern="[A-Za-z]+">
+                        <label for="lname" class="form-label">Last Name</label>
+                        <span class="form-text">
+                            Only alphabets
+                        </span>
+                        <div class="invalid-feedback">
+                            Please enter last name
+                        </div>
+                    </div>
+
+                    <div class="form-floating col-md-12 mb-3">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{user.user.email}}" required>
+                        <label for="email" class="form-label">Email</label>
+                        <span class="form-text">
+                            someone@mail.com
+                        </span>
+                        <div class="invalid-feedback">
+                            Please enter email ID
+                        </div>
+                    </div>
+
+                    <div class="form-floating col-md-12 mb-3">
+                        <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile Number" value="{{user.mobile}}" required>
+                        <label for="mobile" class="form-label">Mobile</label>
+                        <span class="form-text">
+                            9876XXXX56
+                        </span>
+                        <div class="invalid-feedback">
+                            Please enter mobile number
+                        </div>
+                    </div>
+
+                    <div class="form-floating col-md-12 mb-3">
+                        <textarea name="address" id="address" cols="30" rows="10" class="form-control" required placeholder="Address">{{user.address}}</textarea>
+                        <label for="address" class="form-label">Address</label>
+                        <div class="invalid-feedback">
+                            Please enter address
+                        </div>
+                    </div>
+
+                    <div class="form-floating col-md-6 mb-3">
+                        <input type="text" class="form-control" id="total" name="total" value="{{total}}" readonly required placeholder="total">
+                        <label for="total" class="form-label">Total</label>
+                    </div>
+                                        
+
+                    <div class="mb-3">
+                        <button class="btn btn-primary" type="submit" value="submit">Confirm Order</button>
+                    </div>
+                </form>
+
+    </div>
+
+</div>
+
 
 {% endblock %}

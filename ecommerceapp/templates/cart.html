@@ -12,6 +12,8 @@
         <tr>
             <th scope="col">Image</th>
             <th scope="col">Name</th>
+            <th scope="col">MRP</th>
+            <th scope="col">Discount</th>
             <th scope="col">Price</th>
             <th scope="col">Quantity</th>
             <th scope="col">Total</th>
@@ -25,6 +27,8 @@
             </td>
             <td><a href="{% url 'product_detail' i %}" class="link-success link-offset-2 link-underline link-underline-opacity-0" style="text-decoration: none;">{{i|productname}}</a></td>
             <td>{{i|productprice}}</td>
+            <td>{{i|productdiscount}}%</td>
+            <td>{{i|applydiscount}}</td>
             <td>
                 <a href="{% url 'decre' i %}" class="btn btn-warning pull-left" id="decrebtn-{{forloop.counter}}">-</a>
                 <input type="text" class="cart-plus-minus-box" size="2" type="text" style="border:1px solid grey; border-radius: 2px;" id="shop_qty-{{forloop.counter}}" name="qtybutton" value="{{j}}" readonly/>
@@ -37,7 +41,7 @@
         </tr>
         {% endfor %}
         <tr>
-            <td colspan="4"></td>
+            <td colspan="6"></td>
             <td colspan="2" id="total-price"></td>
         </tr>
     </tbody>
