@@ -406,8 +406,6 @@ def feedback(request, pid):
         order=Booking.objects.get(id=pid)
         fbs=Feedback.objects.filter(order=order)
         user=UserProfile.objects.get(user=request.user)
-        print(order.user.username)
-        print(user.user.username)
         if request.user!=order.user:
             messages.success(request, "WHAT DA DOG DOIN?")
             return redirect('main')
@@ -445,3 +443,25 @@ def order_details(request, pid):
         return redirect("main")
     return render(request, "order_details.html", locals())
 
+def manage_feedback(request):
+    if not request.user.is_authenticated:
+        messages.success(request, "WHAT DA DOG DOIN?")
+        return redirect("admin_login")
+    if request.user.is_staff==False:
+        return redirect("admin_login")
+    fbs=Feedback.objects.all()
+    return render(request, "manage_feedback.html", locals())
+
+def admin_delete_feedback(request, pid):
+    if not request.user.is_authenticated:
+        messages.success(request, "WHAT DA DOG DOIN?")
+        return redirect("admin_login")
+    if request.user.is_staff==False:
+        return redirect("admin_login")
+    try:
+        fb=Feedback.objects.get(id=pid)
+        fb.delete()
+        messages.success(request, "Feedback deleted")
+    except:
+        messages.success(request, "Something went wrong")
+    return redirect("manage_feedback")

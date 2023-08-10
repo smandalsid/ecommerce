@@ -1,0 +1,32 @@
+{% include 'admin_base.html' %}
+
+{% block main %}
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">User</th>
+            <th scope="col">Order ID</th>
+            <th scope="col">Subject</th>
+            <th scope="col">Feedback</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        {% for i in fbs %}
+        <tr>
+            <th scope="row">1</th>
+            <td>{{i.user.username}}</td>
+            <td>{{i.order.id}}</td>
+            <td>{{i.subject}}</td>
+            <td>{{i.feedback}}</td>
+            <td><a href="{% url 'admin_delete_feedback' i.id %}" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}
