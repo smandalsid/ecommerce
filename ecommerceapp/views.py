@@ -427,3 +427,21 @@ def delete_feedback(request, pid):
     fb.delete()
     messages.success(request, "Feedback deleted")
     return redirect("my_order")
+
+def order_details(request, pid):
+    if not request.user.is_authenticated:
+        return redirect('main')
+    try:
+        order=Booking.objects.get(id=pid)
+        if request.user!=order.user:
+            messages.success(request, "WHAT DA DOG DOIN?")
+            return redirect("main")
+        product=(order.product).replace("'", '"')
+        myli = json.loads(str(product))
+        product = myli['objects'][0]
+        print(product)
+    except:
+        messages.success(request, "WHAT DA DOG DOIN?")
+        return redirect("main")
+    return render(request, "order_details.html", locals())
+

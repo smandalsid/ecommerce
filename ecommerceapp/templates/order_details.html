@@ -1,0 +1,36 @@
+{% include 'navbar.html' %}
+{% load static custom_tags %}
+{% block body %}
+
+<h1 class="text-center m-2"></h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Image</th>
+            <th scope="col">Name</th>
+            <th scope="col">MRP</th>
+            <th scope="col">Discount</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total</th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        {% for i, j in product.items %}
+        <tr>
+            <td><img class="img-thumbnail" src="{{i|productimage}}" alt="product" style="width:100px;height:100px"></a>
+            </td>
+            <td><a href="{% url 'product_detail' i %}" class="link-success link-offset-2 link-underline link-underline-opacity-0" style="text-decoration: none;">{{i|productname}}</a></td>
+            <td>{{i|productprice}}</td>
+            <td>{{i|productdiscount}}%</td>
+            <td>{{i|applydiscount}}</td>
+            <td>
+                <input type="text" class="cart-plus-minus-box" size="2" type="text" style="border:1px solid grey; border-radius: 2px;" id="shop_qty-{{forloop.counter}}" name="qtybutton" value="{{j}}" readonly/>
+            </td>
+            <td id="totalprice-{{forloop.counter}}">{% producttotalprice i j %}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

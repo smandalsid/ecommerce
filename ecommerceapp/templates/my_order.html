@@ -17,7 +17,7 @@
         {% for i in orders %}
         <tr>
             <td>{{forloop.counter}}</td>
-            <td>{{i.id}}</td>
+            <td>{{i.id}} <a href="{% url 'order_details' i.id %}" title="Details"><i class="fa-solid fa-circle-info"></i></a></td>
             <td>{{i.total}}</td>
             <td><a href="#" class="btn btn-primary disabled" title="Track Status">{{i.get_status_display}}</a></td>
             <td>{{i.created}}</td>
