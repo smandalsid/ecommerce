@@ -356,3 +356,28 @@ def user_order_track(request, pid):
     status=int(order.status)
     return render(request, "user_order_track.html", locals())
 
+def cancel_order(request, pid):
+    if not request.user.is_authenticated:
+        return redirect('user_login')
+    order=Booking.objects.get(id=pid)
+    if order.user!=request.user:
+        messages.success(request, "ERROR!!!")
+        return redirect('main')
+    
+    order.status=5
+    order.save()
+    messages.success(request, "Order cancelled successfully")
+    return redirect('my_order')
+
+def return_order(request, pid):
+    if not request.user.is_authenticated:
+        return redirect('user_login')
+    order=Booking.objects.get(id=pid)
+    if order.user!=request.user:
+        messages.success(request, "ERROR!!!")
+        return redirect('main')
+    
+    order.status=6
+    order.save()
+    messages.success(request, "Order return initiated")
+    return redirect('my_order')

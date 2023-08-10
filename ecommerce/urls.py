@@ -52,5 +52,7 @@ urlpatterns = [
     path('booking/', booking, name="booking"),
     path('my_order/', my_order, name="my_order"),
     path('user_order_track/<int:pid>', user_order_track, name="user_order_track"),
+    path('cancel_order/<int:pid>', cancel_order, name="cancel_order"),
+    path('return_order/<int:pid>', return_order, name="return_order"),
     
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

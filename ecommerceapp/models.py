@@ -47,7 +47,7 @@ class Cart(models.Model):
     def __str__(self):
         return self.user.username
     
-ORDERSTATUS=((1, "Pending"), (2, "Dispatch"), (3, "On the way"), (4, "Delivered"), (5, "Cancel"), (6, "Return"))
+ORDERSTATUS=((1, "Pending"), (2, "Dispatch"), (3, "On the way"), (4, "Delivered"), (5, "Cancelled"), (6, "Returned"))
 
 class Booking(models.Model):
     user=models.ForeignKey(User, on_delete=models.CASCADE, blank=False)

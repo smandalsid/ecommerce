@@ -22,9 +22,12 @@
             <td><a href="#" class="btn btn-primary disabled" title="Track Status">{{i.get_status_display}}</a></td>
             <td>{{i.created}}</td>
             <td>
-                <a href="#" class="btn btn-success" title="Return Order"><i class="fa fa-refresh"></i></a>
-                <a href="#" class="btn btn-danger" title="Cancel Order"><i class="fa-solid fa-xmark"></i></a>
                 <a href="{% url 'user_order_track' i.id %}" class="btn btn-warning" title="Track Order"><i class="fa-solid fa-spinner"></i></a>
+                {% if i.status < 4 %}
+                <a href="{% url 'cancel_order' i.id %}" class="btn btn-danger" title="Cancel Order"><i class="fa-solid fa-xmark"></i></a>
+                {% elif i.status == 4 %}
+                <a href="{% url 'return_order' i.id %}" class="btn btn-success" title="Return Order"><i class="fa fa-refresh"></i></a>
+                {% endif %}
             </td>
         </tr>
         {% endfor %}
