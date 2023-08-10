@@ -1,0 +1,56 @@
+{% include 'navbar.html' %}
+
+{% block body %}
+
+<div class="card m-5 border border-success">
+
+    <div class="card-body">
+        <h2 class="card-title text-center">Please give your Feedback</h5>
+            <form class="was-validated row g-1" name="signup" method="post" onsubmit="return(check())"
+                enctype="multipart/form-data">
+                {% csrf_token %}
+
+
+                <div class="form-floating col-md-12 mb-3">
+                    <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter subject"
+                        required>
+                    <label for="subject" class="form-label">Enter subject</label>
+                    <div class="invalid-feedback">
+                        Please enter subject
+                    </div>
+                </div>
+
+                <div class="form-floating col-md-12 mb-3">
+                    <textarea name="feedback" id="feedback" cols="30" rows="10" class="form-control" required
+                        placeholder="Feedback"></textarea>
+                    <label for="address" class="form-label">Feedback</label>
+                    <div class="invalid-feedback">
+                        Please enter feedback
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <button class="btn btn-primary" type="submit" value="submit">Submit feedback</button>
+                </div>
+            </form>
+
+    </div>
+
+</div>
+
+<div class="list-group">
+    <h1 class="text-center">Previous feedbacks</h1>
+    {% for i in fbs %}
+    <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{i.subject}}</h5>
+        </div>
+        <p class="mb-1">{{i.feedback}}</p>
+        <a href="{% url 'delete_feedback' i.id %}" class="m-2"><button class="btn btn-danger">Delete</button></a>
+    </a>
+    {% empty %}
+    <h5 class="text-center">No feedbacks yet</h5>
+    {% endfor %}
+</div>
+
+{% endblock %}

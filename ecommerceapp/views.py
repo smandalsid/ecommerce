@@ -352,32 +352,78 @@ def user_order_track(request, pid):
     if not request.user.is_authenticated:
         return redirect('user_login')
     
-    order=Booking.objects.get(id=pid)
-    status=int(order.status)
+    try:
+        order=Booking.objects.get(id=pid)
+        if order.user!=request.user:
+            messages.success(request, "WHAT DA DOG DOIN?")
+            return redirect('main')
+        status=int(order.status)
+    except:
+        messages.success(request, "WHAT DA DOG DOIN?")
+        return redirect('main')
     return render(request, "user_order_track.html", locals())
 
 def cancel_order(request, pid):
     if not request.user.is_authenticated:
         return redirect('user_login')
-    order=Booking.objects.get(id=pid)
-    if order.user!=request.user:
-        messages.success(request, "ERROR!!!")
+    try:
+        order=Booking.objects.get(id=pid)
+        if order.user!=request.user:
+            messages.success(request, "WHAT DA DOG DOIN?")
+            return redirect('main')
+        
+        order.status=5
+        order.save()
+        messages.success(request, "Order cancelled successfully")
+    except:
+        messages.success(request, "WHAT DA DOG DOIN?")
         return redirect('main')
-    
-    order.status=5
-    order.save()
-    messages.success(request, "Order cancelled successfully")
     return redirect('my_order')
 
 def return_order(request, pid):
     if not request.user.is_authenticated:
         return redirect('user_login')
-    order=Booking.objects.get(id=pid)
-    if order.user!=request.user:
-        messages.success(request, "ERROR!!!")
+    
+    try:
+        order=Booking.objects.get(id=pid)
+        if order.user!=request.user:
+            messages.success(request, "WHAT DA DOG DOIN?")
+            return redirect('main')
+        
+        order.status=6
+        order.save()
+        messages.success(request, "Order return initiated")
+    except:
+        messages.success(request, "WHAT DA DOG DOIN?")
+        return redirect('main')
+    return redirect('my_order')
+
+def feedback(request, pid):
+    if not request.user.is_authenticated:
         return redirect('main')
     
-    order.status=6
-    order.save()
-    messages.success(request, "Order return initiated")
-    return redirect('my_order')
+    try:
+        order=Booking.objects.get(id=pid)
+        fbs=Feedback.objects.filter(order=order)
+        user=UserProfile.objects.get(user=request.user)
+        print(order.user.username)
+        print(user.user.username)
+        if request.user!=order.user:
+            messages.success(request, "WHAT DA DOG DOIN?")
+            return redirect('main')
+        if request.method=="POST":
+            sub=request.POST["subject"]
+            msg=request.POST["feedback"]
+            fb=Feedback.objects.create(user=request.user, order=order, subject=sub, feedback=msg)
+            messages.success(request, "Feedback submitted")
+            return redirect("my_order")
+    except:
+        messages.success(request, "WHAT DA DOG DOIN?")
+        return redirect('main')
+    return render(request, "feedback.html", locals())
+
+def delete_feedback(request, pid):
+    fb=Feedback.objects.get(id=pid)
+    fb.delete()
+    messages.success(request, "Feedback deleted")
+    return redirect("my_order")

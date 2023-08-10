@@ -21,7 +21,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('', home, name="home"),
     path('index/', index, name="index"),
     path('about/', about, name="about"),
     path('', main, name="main"),
@@ -54,5 +53,7 @@ urlpatterns = [
     path('user_order_track/<int:pid>', user_order_track, name="user_order_track"),
     path('cancel_order/<int:pid>', cancel_order, name="cancel_order"),
     path('return_order/<int:pid>', return_order, name="return_order"),
+    path('feedback/<int:pid>', feedback, name="feedback"),
+    path('delete_feedback/<int:pid>', delete_feedback, name="delete_feedback"),
     
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

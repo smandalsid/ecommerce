@@ -58,4 +58,15 @@ class Booking(models.Model):
     updated=models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.user.username
+        return self.user.username+"-"+str(self.id)
+    
+class Feedback(models.Model):
+    user=models.ForeignKey(User, on_delete=models.CASCADE, blank=False)
+    order=models.ForeignKey(Booking, on_delete=models.CASCADE, blank=False)
+    subject=models.TextField(max_length=100, blank=False)
+    feedback=models.TextField(max_length=300, null=False, blank=False)
+    created=models.DateTimeField(auto_now_add=True)
+    updated=models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.user.username+"-"+str(self.order.id)
