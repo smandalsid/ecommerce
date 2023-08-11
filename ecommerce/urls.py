@@ -58,5 +58,6 @@ urlpatterns = [
     path('order_details/<int:pid>', order_details, name="order_details"),
     path('manage_feedback/', manage_feedback, name="manage_feedback"),
     path('admin_delete_feedback/<int:pid>', admin_delete_feedback, name="admin_delete_feedback"),
+    path('payment_handler/', payment_handler, name="payment_handler"),
     
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

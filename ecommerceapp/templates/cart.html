@@ -3,8 +3,10 @@
 {% block body %}
 <br>
 <h3 class="m-2" style="float: left;">Your cart</h3>
-<a href="{% url 'booking' %}"><button type="button" class="btn btn-success m-2" style="float: right;">Check Out</button></a>
-<a href="{% url 'user_product' 0 %}"><button type="button" class="btn btn-warning m-2" style="float: right;">Continue Shopping</button></a>
+<a href="{% url 'booking' %}"><button type="button" class="btn btn-success m-2" style="float: right;">Check
+        Out</button></a>
+<a href="{% url 'user_product' 0 %}"><button type="button" class="btn btn-warning m-2" style="float: right;">Continue
+        Shopping</button></a>
 <br>
 
 <table class="table">
@@ -25,13 +27,17 @@
         <tr>
             <td><img class="img-thumbnail" src="{{i|productimage}}" alt="product" style="width:100px;height:100px"></a>
             </td>
-            <td><a href="{% url 'product_detail' i %}" class="link-success link-offset-2 link-underline link-underline-opacity-0" style="text-decoration: none;">{{i|productname}}</a></td>
+            <td><a href="{% url 'product_detail' i %}"
+                    class="link-success link-offset-2 link-underline link-underline-opacity-0"
+                    style="text-decoration: none;">{{i|productname}}</a></td>
             <td>{{i|productprice}}</td>
             <td>{{i|productdiscount}}%</td>
             <td>{{i|applydiscount}}</td>
             <td>
                 <a href="{% url 'decre' i %}" class="btn btn-warning pull-left" id="decrebtn-{{forloop.counter}}">-</a>
-                <input type="text" class="cart-plus-minus-box" size="2" type="text" style="border:1px solid grey; border-radius: 2px;" id="shop_qty-{{forloop.counter}}" name="qtybutton" value="{{j}}" readonly/>
+                <input type="text" class="cart-plus-minus-box" size="2" type="text"
+                    style="border:1px solid grey; border-radius: 2px;" id="shop_qty-{{forloop.counter}}"
+                    name="qtybutton" value="{{j}}" readonly />
                 <a href="{% url 'incre' i %}" class="btn btn-warning pull-right">+</a>
             </td>
             <td id="totalprice-{{forloop.counter}}">{% producttotalprice i j %}</td>

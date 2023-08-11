@@ -3,7 +3,14 @@ from ecommerceapp.models import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 import json
+from django.conf import settings
+import razorpay
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponseBadRequest
 # Create your views here.
+
+razorpay_client = razorpay.Client(
+    auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
 
 def home(request):
     return render(request, 'home.html')
@@ -312,6 +319,17 @@ def deletecart(request, pid):
     messages.success(request, "Deleted Successfully")
     return redirect('cart')
 
+def deletecart(request, pid):
+    cart=Cart.objects.get(user=request.user)
+    product=(cart.product).replace("'", '"')
+    myli=json.loads(str(product))
+
+    del myli['objects'][0][str(pid)]
+    cart.product=myli
+    cart.save()
+    messages.success(request, "Deleted Successfully")
+    return redirect('cart')
+
 def booking(request):
 
     if not request.user.is_authenticated:
@@ -332,15 +350,82 @@ def booking(request):
     for i, j in productid.items():
         product=Product.objects.get(id=i)
         total+=int(int(j)*(int(product.price)-(int(product.price)*int(product.discount)/100)))
-    
-    if request.method=="POST":
-        book=Booking.objects.create(user=request.user, product=cart.product, total=total)
-        cart.product={"objects":[]}
-        cart.save()
-        messages.success(request, "Order placed successfully")
-        return redirect('main')
 
-    return render(request, "booking.html", locals())
+    currency="INR"
+    amount=total*100
+    razorpay_order=razorpay_client.order.create(dict(amount=amount, currency=currency, payment_capture='0'))
+    razorpay_order_id=razorpay_order['id']
+    callback_url='../payment_handler/'
+
+    context={}
+    context['razorpay_order_id'] = razorpay_order_id
+    context['razorpay_merchant_key'] = settings.RAZOR_KEY_ID
+    context['razorpay_amount'] = amount
+    context['currency'] = currency
+    context['callback_url'] = callback_url
+    
+    # if request.method=="POST":
+        # book=Booking.objects.create(user=request.user, product=cart.product, total=total)
+        # cart.product={"objects":[]}
+        # cart.save()
+    #     messages.success(request, "Order placed successfully")
+    #     return redirect('main')
+    return render(request, "booking.html", locals())  
+
+@csrf_exempt
+def payment_handler(request):
+
+    if not request.user.is_authenticated:
+        return redirect('user_login')
+    
+    user=UserProfile.objects.get(user=request.user)
+    cart=Cart.objects.get(user=request.user)
+    total=0
+
+    productid=(cart.product).replace("'", '"')
+    productid=json.loads(str(productid))
+
+    try:
+        productid=productid['objects'][0]
+    except:
+        messages.success(request, "Cart is empty!!")
+        return redirect('cart')
+    for i, j in productid.items():
+        product=Product.objects.get(id=i)
+        total+=int(int(j)*(int(product.price)-(int(product.price)*int(product.discount)/100)))
+
+    if request.method=="POST":
+        try:
+            payment_id=request.POST.get('razorpay_payment_id', '')
+            razorpay_order_id=request.POST.get('razorpay_order_id', '')
+            signature=request.POST.get('razorpay_signature', '')
+            params_dict={
+                'razorpay_order_id': razorpay_order_id,
+                'razorpay_payment_id' : payment_id,
+                'razorpay_signature': signature,
+            }
+
+            result=razorpay_client.utility.verify_payment_signature(params_dict)
+            if result is not None:
+                amount=total*100
+                try:
+                    razorpay_client.payment.capture(payment_id, amount)
+                    book=Booking.objects.create(user=request.user, product=cart.product, total=total, razorpay_order_id=razorpay_order_id, razorpay_payment_id=payment_id)
+                    cart.product={"objects":[]}
+                    cart.save()
+                    messages.success(request, "Order placed successfully")
+                    return redirect("my_order")
+                except:
+                    messages.success(request, "Error placing the order")
+                    return redirect("cart")
+            else:
+                messages.success(request, "Error placing the order")
+                return redirect("cart")
+        except:
+            return HttpResponseBadRequest()
+    else:
+        return HttpResponseBadRequest()
+    
 
 def my_order(request):
     if not request.user.is_authenticated:
@@ -437,7 +522,6 @@ def order_details(request, pid):
         product=(order.product).replace("'", '"')
         myli = json.loads(str(product))
         product = myli['objects'][0]
-        print(product)
     except:
         messages.success(request, "WHAT DA DOG DOIN?")
         return redirect("main")
